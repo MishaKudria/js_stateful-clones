@@ -6,6 +6,7 @@
  *
  * @return {Object[]}
  */
+// eslint-disable-next-line no-unused-vars
 function transformStateWithClones(state, actions) {
   const history = [];
   let currentState = state;
@@ -13,24 +14,30 @@ function transformStateWithClones(state, actions) {
   for (const action of actions) {
     let nextState;
 
-    if (action.type === 'addProperties') {
-      nextState = { ...currentState, ...action.extraData };
-    } else if (action.type === 'removeProperties') {
-      nextState = { ...currentState };
+    switch (action.type) {
+      case 'addProperties':
+        nextState = { ...currentState, ...action.extraData };
+        break;
 
-      for (const key of action.keysToRemove) {
-        delete nextState[key];
-      }
-    } else if (action.type === 'clear') {
-      nextState = {};
+      case 'removeProperties':
+        nextState = { ...currentState };
+
+        for (const key of action.keysToRemove) {
+          delete nextState[key];
+        }
+        break;
+
+      case 'clear':
+        nextState = {};
+        break;
+
+      default:
+        nextState = currentState;
     }
 
     history.push(nextState);
-
     currentState = nextState;
   }
 
   return history;
 }
-
-module.exports = transformStateWithClones;
