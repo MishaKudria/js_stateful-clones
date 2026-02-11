@@ -7,9 +7,9 @@
  * @return {Object[]}
  */
 // eslint-disable-next-line no-unused-vars
-function transformStateWithClones(state, actions) {
+function transformStateWithClones(initialState, actions) {
   const history = [];
-  let currentState = state;
+  let currentState = initialState;
 
   for (const action of actions) {
     let nextState;
@@ -41,3 +41,5 @@ function transformStateWithClones(state, actions) {
 
   return history;
 }
+
+module.exports = transformStateWithClones;
